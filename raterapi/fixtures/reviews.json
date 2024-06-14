@@ -1,0 +1,20 @@
+[
+    {
+        "model": "raterapi.review",
+        "pk": 1,
+        "fields": {
+          "game": 1,
+          "user": 2,
+          "comment": "A challenging and timeless game."
+        }
+    },
+    {
+        "model": "raterapi.review",
+        "pk": 2,
+        "fields": {
+          "game": 2,
+          "user": 1,
+          "comment": "Great fun for the whole family."
+        }
+    }
+]

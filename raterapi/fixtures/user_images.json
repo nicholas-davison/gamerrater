@@ -1,0 +1,20 @@
+[
+    {
+        "model": "raterapi.userimage",
+        "pk": 1,
+        "fields": {
+          "user": 1,
+          "game": 1,
+          "image": "game_images/chess.jpg"
+        }
+      },
+      {
+        "model": "raterapi.userimage",
+        "pk": 2,
+        "fields": {
+          "user": 2,
+          "game": 2,
+          "image": "game_images/monopoly.jpg"
+        }
+      }   
+]
