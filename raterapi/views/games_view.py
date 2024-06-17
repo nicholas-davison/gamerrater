@@ -13,17 +13,20 @@ class GameViewSet(ViewSet):
         serializer = GameSerializer(games, many=True)
         return Response(serializer.data)
     
-
+    def retrieve(self, request, pk):
+        game = Game.objects.get(pk=pk)
+        serializer = GameSerializer(game, many=False)
+        return Response(serializer.data)
+    
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ('name',)
+        
 
 class GameSerializer(serializers.ModelSerializer):
     """JSON serializer"""
     categories = CategorySerializer(many=True)
-    #categories = serializers.StringRelatedField(many=True, source='categories.all')
     class Meta:
         model = Game
         fields = [ 'id', 'title', 'description', 'designer', 'year_released', 'number_of_players', 'estimated_play_time', 'age_recommendation', 'categories' ]
-

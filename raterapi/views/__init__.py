@@ -1,3 +1,2 @@
 from .users import UserViewSet
-
-from .games import GameViewSet
+from .games_view import GameViewSet
