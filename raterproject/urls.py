@@ -4,10 +4,12 @@ from rest_framework import routers
 from raterapi.views import UserViewSet
 from django.conf import settings
 from django.conf.urls.static import static
-from raterapi.views import GameViewSet
+from raterapi.views import GameViewSet, CategoryViewSet, GameCategoryViewSet
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'games', GameViewSet, 'game')
+router.register(r'categories', CategoryViewSet, 'category')
+router.register(r'game-categories', GameCategoryViewSet, 'game_categories')
 
 urlpatterns = [
     path('', include(router.urls)),

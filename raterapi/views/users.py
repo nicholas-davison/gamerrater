@@ -26,6 +26,7 @@ class UserViewSet(viewsets.ViewSet):
             user = User.objects.create_user(
                 username=serializer.validated_data['username'],
                 password=serializer.validated_data['password'],
+                email=serializer.validated_data['username'],
                 first_name=serializer.validated_data['first_name'],
                 last_name=serializer.validated_data['last_name']
             )
