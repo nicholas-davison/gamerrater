@@ -2,7 +2,7 @@ from django.http import HttpResponseServerError
 from rest_framework import serializers, status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
-from raterapi.models import Category
+from raterapi.models import Category, Game
 from django.contrib.auth.models import User
 
 class CategoryViewSet(ViewSet):
@@ -20,10 +20,15 @@ class CategoryViewSet(ViewSet):
         except Exception as ex:
             return HttpResponseServerError(ex)
 
+class GameSeralizer(serializers.ModelSerializer):
+    class Meta:
+        model = Game
+        fields = ('title',)
 
 class CategorySerializer(serializers.ModelSerializer):
     """JSON serializer"""
+    games = GameSeralizer(many=True)
 
     class Meta:
         model = Category
-        fields = ( 'id', 'name' )
+        fields = ( 'id', 'name', 'games' )

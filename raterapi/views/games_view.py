@@ -99,6 +99,8 @@ class GameViewSet(ViewSet):
         except Game.DoesNotExist:
              return Response({'message': 'failure to locate game to destroy'}, status=status.HTTP_404_NOT_FOUND)
 
+
+
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
