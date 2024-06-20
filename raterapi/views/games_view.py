@@ -11,14 +11,14 @@ class GameViewSet(ViewSet):
 
     def list(self, request):
         games = Game.objects.all()
-        serializer = GameSerializer(games, many=True)
+        serializer = GameSerializer(games, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
     def retrieve(self, request, pk=None):
         try:
             game = Game.objects.get(pk=pk)
-            serializer = GameSerializer(game, many=False)
+            serializer = GameSerializer(game, many=False, context={'request': request})
             return Response(serializer.data)
         
         except Game.DoesNotExist:
@@ -53,7 +53,7 @@ class GameViewSet(ViewSet):
         new_game.save()
 
         #serialize the new object 
-        serialized = GameSerializer(new_game, many=False)
+        serialized = GameSerializer(new_game, many=False, context={'request': request})
 
         #return serialized response
         return Response(serialized.data, status=status.HTTP_201_CREATED)
@@ -110,6 +110,10 @@ class CategorySerializer(serializers.ModelSerializer):
 class GameSerializer(serializers.ModelSerializer):
     """JSON serializer"""
     categories = CategorySerializer(many=True)
+    is_owner = serializers.SerializerMethodField()
+
+    def get_is_owner(self, obj):
+         return self.context['request'].user == obj.user
     class Meta:
         model = Game
-        fields = ( 'id', 'title', 'description', 'designer', 'year_released', 'number_of_players', 'estimated_play_time', 'age_recommendation', 'categories' )
+        fields = ( 'id', 'title', 'description', 'designer', 'year_released', 'number_of_players', 'estimated_play_time', 'age_recommendation', 'categories', 'is_owner' )
