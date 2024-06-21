@@ -111,9 +111,18 @@ class GameSerializer(serializers.ModelSerializer):
     """JSON serializer"""
     categories = CategorySerializer(many=True)
     is_owner = serializers.SerializerMethodField()
+    average_rating = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
-         return self.context['request'].user == obj.user
+        return self.context['request'].user == obj.user
+    
+    def get_average_rating(self, obj):
+        """calc avg rating for each game"""
+        ratings = obj.ratings.all()
+        total_ratings = sum(rating.rating for rating in ratings)
+        avg_rating = total_ratings / len(ratings) if ratings else 0
+        return avg_rating
+
     class Meta:
         model = Game
-        fields = ( 'id', 'title', 'description', 'designer', 'year_released', 'number_of_players', 'estimated_play_time', 'age_recommendation', 'categories', 'is_owner' )
+        fields = ( 'id', 'title', 'description', 'designer', 'year_released', 'number_of_players', 'estimated_play_time', 'age_recommendation', 'categories', 'is_owner', 'average_rating' )
